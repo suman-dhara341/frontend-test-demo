@@ -33,7 +33,7 @@ const globalSetup = async (config: FullConfig) => {
   });
 
   const API_BASE_URL = EnvConfigPlaywright.apiUrl;
-  const USER_BASE_URL = EnvConfigPlaywright.userUrl;
+  const USER_BASE_URL = "https://main.d1vos4qfjhiyoz.amplifyapp.com";
   const email = process.env.TEST_USER_EMAIL ?? "";
   const password = process.env.TEST_USER_PASSWORD ?? "";
 
