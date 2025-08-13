@@ -8,7 +8,7 @@ export default defineConfig({
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : 1,
   testMatch: "test.list.ts",
-  reporter: "html",
+  reporter: [["dot"]], // Correct tuple format
   timeout: 80000,
   globalSetup: "./tests/authService/auth.spec",
   use: {
