@@ -1,0 +1,11 @@
+version: 0.2
+phases:
+  install:
+    runtime-versions:
+      nodejs: 20  # Use a supported version
+    commands:
+      - npm install
+      - npx playwright install --with-deps  # Install Playwright dependencies
+  build:
+    commands:
+      - npx playwright test  # Run tests, which will publish the metric via SDK
