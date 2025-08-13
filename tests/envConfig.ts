@@ -1,6 +1,6 @@
-// tests/config/envConfig.ts
+import "dotenv/config";
 
-type StageName = "alpha" | "alpha" | "prod";
+type StageName = "local" | "alpha" | "prod";
 
 type ConfigSchema = Record<
   StageName,
@@ -36,6 +36,6 @@ const stage =
 export const EnvConfigPlaywright = configData[stage];
 
 export const testCredentials = {
-  email: process.env.TEST_USER_EMAIL || "wabib72127@bizmud.com",
-  password: process.env.TEST_USER_PASSWORD || "Sum@n123",
+  email: process.env.TEST_USER_EMAIL,
+  password: process.env.TEST_USER_PASSWORD,
 };

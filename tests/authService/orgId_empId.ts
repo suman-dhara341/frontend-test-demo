@@ -1,6 +1,8 @@
 import fs from "fs";
 import path from "path";
 import { handleError } from "../handleError";
+import "dotenv/config";
+import { EnvConfigPlaywright } from "../envConfig";
 
 const authFilePath = path.resolve(
   process.cwd(),
@@ -20,12 +22,18 @@ try {
     throw new Error("Invalid or missing 'origins' in user.json");
   }
 
+  // ✅ Use stage-specific URL from config
+  const expectedOrigin = EnvConfigPlaywright.userUrl.replace(/\/$/, ""); // remove trailing slash
+
+  // Match any origin that contains the domain (works for localhost, alpha, prod)
   const originData = authData.origins.find((o: any) =>
-    o.origin?.includes("localhost")
+    o.origin?.includes(expectedOrigin)
   );
 
   if (!originData || !originData.localStorage) {
-    throw new Error("No matching origin or localStorage found for 'localhost'");
+    throw new Error(
+      `No matching origin or localStorage found for '${expectedOrigin}'`
+    );
   }
 
   const persistAuthEntry = originData.localStorage.find(

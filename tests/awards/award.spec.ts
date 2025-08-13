@@ -97,7 +97,10 @@ export default function () {
       total++;
       try {
         if (allAward.data && allAward.data.length > 0) {
-          await page.waitForSelector("#award_select", { state: "visible" });
+          await page.waitForSelector("#award_select", {
+            state: "visible",
+            timeout: 10000,
+          });
           await page.locator("#award_select").click();
 
           const detailsAPIResp = await request.get(

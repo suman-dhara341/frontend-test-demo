@@ -14,6 +14,10 @@ export default function () {
     const API_BASE_URL = EnvConfigPlaywright.apiUrl;
     const USER_BASE_URL = EnvConfigPlaywright.userUrl;
 
+    console.log(`Using API Base URL: ${API_BASE_URL}`);
+    console.log(`Using User Base URL: ${USER_BASE_URL}`);
+    console.log(idToken, orgId, empId, isAdmin);
+
     await page.goto(`${USER_BASE_URL}/feed`);
 
     try {
@@ -110,7 +114,7 @@ export default function () {
       }
 
       total++;
-      await expect(page).toHaveURL(`${USER_BASE_URL}/feed`);
+      await expect(page).toHaveURL(`${USER_BASE_URL}/feed/`);
       passed++;
 
       // 5. Give Recognition flow
@@ -127,26 +131,26 @@ export default function () {
         await page.click("#badge_select");
         await page.fill(
           'input[placeholder="Search an employee"]',
-          "Sundar Pichai"
+          "Mark Zuckerberg"
         );
         await page
-          .getByRole("option", { name: "Sundar Pichai" })
+          .getByRole("option", { name: "Mark Zuckerberg" })
           .first()
           .waitFor();
         await page
-          .getByRole("option", { name: "Sundar Pichai" })
+          .getByRole("option", { name: "Mark Zuckerberg" })
           .first()
           .click();
         // await page.fill(
         //   'input[placeholder="Search and tag employees"]',
-        //   "Sundar Pichai"
+        //   "Mark Zuckerberg"
         // );
         // await page
-        //   .getByRole("option", { name: "Sundar Pichai" })
+        //   .getByRole("option", { name: "Mark Zuckerberg" })
         //   .first()
         //   .waitFor();
         // await page
-        //   .getByRole("option", { name: "Sundar Pichai" })
+        //   .getByRole("option", { name: "Mark Zuckerberg" })
         //   .first()
         //   .click();
         await page.fill("#recognition_details_content", "Best Quality");
@@ -200,12 +204,27 @@ export default function () {
         }
         expect(feedData.status).toBe(200);
         expect(feedData.message).toBe("Feeds fetched successfully!");
+
         if (Array.isArray(feedData.data) && feedData.data.length > 0) {
           if (feedData.data[0].isLike === false) {
-            await page.click("#feed_like_button");
+            await expect(page.locator("#feed_like_button").first()).toBeVisible(
+              { timeout: 10000 }
+            );
+            await page.locator("#feed_like_button").first().click();
           }
-          await page.click("#feed_like_modal");
-          await page.locator("#like_list_modal_close path").nth(1).click();
+
+          await page.locator("#feed_like_modal").first().waitFor({
+            state: "visible",
+            timeout: 8000,
+          });
+
+          await page.locator("#feed_like_modal").first().click();
+
+          await page.waitForSelector("#likeCloseButton", {
+            state: "visible",
+            timeout: 8000,
+          });
+          await page.locator("#likeCloseButton").click();
 
           const commentInput = page
             .locator(
@@ -216,25 +235,23 @@ export default function () {
           await commentInput.fill("well done.");
           await commentInput.waitFor({ state: "visible", timeout: 80000 });
           await commentInput.type("well done.");
-          await page.locator('button[type="submit"]:has(svg)').first().click();
+          await page.locator("#sendCommentButton").first().click();
+
           await page
-            .locator("text=/\\d+ Comments?/")
+            .locator("#commentsButton")
             .first()
             .waitFor({ state: "visible", timeout: 8000 });
-          await page.locator("text=/\\d+ Comments?/").first().click();
+
+          await page.locator("#commentsButton").first().click();
           await page
             .locator('text="All Comments"')
             .waitFor({ state: "visible", timeout: 5000 });
 
-          await expect(
-            page.locator("progressbar.three-dots-loading")
-          ).toBeHidden({
-            timeout: 80000,
-          });
+          await page
+            .locator("#commentCloseButton")
+            .waitFor({ state: "visible", timeout: 5000 });
 
-          const closeX = page.locator("svg.lucide-x");
-          await expect(closeX).toBeVisible({ timeout: 5000 });
-          await closeX.click();
+          await page.locator("#commentCloseButton").click();
         }
         passed++;
       } catch (error: any) {

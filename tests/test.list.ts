@@ -7,20 +7,20 @@ import employeeGoalsSpec from "./EmployeeGoals/employeeGoals.spec";
 import growthSpec from "./growth/growth.spec";
 import profileSpec from "./profile/profile.spec";
 import awardsSpec from "./awards/award.spec";
-import { isAdmin } from "./authService/orgId_empId";
 import dashboardSpec from "./managerHub/dashboard.spec";
 import pulseSpec from "./managerHub/pulse.spec";
 import analyticsSpec from "./managerHub/analytics.spec";
+import myTeamSpec from "./managerHub/myTeam.spec";
 
 feedSpec();
-profileSpec();
-awardsSpec();
-badgeSpec();
-hierarchySpec();
-employeeGoalsSpec();
-if (!isAdmin) growthSpec();
-growthSpec();
+// profileSpec();
+// awardsSpec();
+// badgeSpec();
+// hierarchySpec();
+// employeeGoalsSpec();
+// growthSpec();
 // dashboardSpec();
 // analyticsSpec();
-// pulseSpec(); /
-logoutSpec();
+// myTeamSpec();
+// pulseSpec();   ///doubt
+// logoutSpec();

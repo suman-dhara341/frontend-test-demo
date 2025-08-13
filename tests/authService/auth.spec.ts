@@ -33,9 +33,12 @@ const globalSetup = async (config: FullConfig) => {
   });
 
   const API_BASE_URL = EnvConfigPlaywright.apiUrl;
-  const USER_BASE_URL = "https://main.d1vos4qfjhiyoz.amplifyapp.com";
+  const USER_BASE_URL = EnvConfigPlaywright.userUrl;
   const email = process.env.TEST_USER_EMAIL ?? "";
   const password = process.env.TEST_USER_PASSWORD ?? "";
+
+  console.log(`Using API Base URL: ${API_BASE_URL}`);
+  console.log(`Using User Base URL: ${USER_BASE_URL}`);
 
   total++;
   const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -142,7 +145,7 @@ const globalSetup = async (config: FullConfig) => {
     throw error;
   } finally {
     await browser.close();
-    // await publishMetric(total, passed, failed, "Login Page Tests");
+    await publishMetric(total, passed, failed, "Login Page Tests");
   }
 };
 

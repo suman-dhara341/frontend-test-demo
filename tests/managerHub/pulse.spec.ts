@@ -4,7 +4,7 @@ import { EnvConfigPlaywright } from "../envConfig";
 import { idToken } from "../authService/orgId_empId";
 
 export default function () {
-  test("ManagerHub Page", async ({ page, request }) => {
+  test("ManagerHubs Page Pulse tab", async ({ page, request }) => {
     const API_BASE_URL = EnvConfigPlaywright.apiUrl;
     const USER_BASE_URL = EnvConfigPlaywright.userUrl;
 
@@ -14,6 +14,8 @@ export default function () {
       await expect(page).toHaveURL(`${USER_BASE_URL}/feed`, {
         timeout: 80000,
       });
+
+      await page.pause();
 
       const USER_DATA = await page.evaluate(() => {
         try {
