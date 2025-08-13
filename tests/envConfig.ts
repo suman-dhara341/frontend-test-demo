@@ -1,6 +1,6 @@
 // tests/config/envConfig.ts
 
-type StageName = "local" | "alpha" | "prod";
+type StageName = "alpha" | "alpha" | "prod";
 
 type ConfigSchema = Record<
   StageName,
