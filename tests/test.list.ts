@@ -12,15 +12,15 @@ import dashboardSpec from "./managerHub/dashboard.spec";
 import pulseSpec from "./managerHub/pulse.spec";
 import analyticsSpec from "./managerHub/analytics.spec";
 
-// feedSpec();
-// profileSpec();
-// awardsSpec();
-// badgeSpec();
-// hierarchySpec();
-// employeeGoalsSpec();
-// if (!isAdmin) growthSpec();
-// growthSpec();
+feedSpec();
+profileSpec();
+awardsSpec();
+badgeSpec();
+hierarchySpec();
+employeeGoalsSpec();
+if (!isAdmin) growthSpec();
+growthSpec();
 // dashboardSpec();
-analyticsSpec();
+// analyticsSpec();
 // pulseSpec(); /
 logoutSpec();
